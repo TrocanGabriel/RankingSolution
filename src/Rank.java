@@ -1,5 +1,3 @@
-import edu.stanford.cs276.util.Pair;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -10,18 +8,11 @@ public class Rank {
 
     private static Map<Query, List<String>> score(Map<Query, Map<String, Document>> queryDict, String scoreType,
                                                   Map<String, Double> idfs) {
-        AScorer scorer = null;
-        if (scoreType.equals("baseline"))
-            scorer = new BaselineScorer();
-        else if (scoreType.equals("cosine"))
+        Scorer scorer = null;
+       if (scoreType.equals("cosine"))
             scorer = new CosineSimilarityScorer(idfs);
         else if (scoreType.equals("bm25"))
             scorer = new BM25Scorer(idfs, queryDict);
-        else if (scoreType.equals("window"))
-            //feel free to change this to match your cosine scorer if you choose to build on top of that instead
-            scorer = new edu.stanford.cs276.SmallestWindowScorer(idfs, queryDict);
-        else if (scoreType.equals("extra"))
-            scorer = new ExtraCreditScorer(idfs);
 
         //put completed rankings here
         Map<Query, List<String>> queryRankings = new HashMap<Query, List<String>>();
@@ -52,9 +43,6 @@ public class Rank {
             for (Pair<String, Double> urlAndScore : urlAndScores)
                 curRankings.add(urlAndScore.getFirst());
             queryRankings.put(query, curRankings);
-        }
-        if (scoreType.equals("window")) {
-            System.out.println(((edu.stanford.cs276.SmallestWindowScorer)scorer).asdf);
         }
         return queryRankings;
     }

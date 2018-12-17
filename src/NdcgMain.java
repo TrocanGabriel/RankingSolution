@@ -5,12 +5,11 @@ import java.util.*;
 public class NdcgMain {
     public static void main(String[] args) throws IOException {
         if (args.length < 2) {
-            System.out.println("Please specify two files: (i) the ranked input file and (ii) the input file containing the " +
-                    "relevance scores.");
+            System.out.println("Incorrect files used in args!");
             System.exit(1);
         }
 
-        HashMap<Integer, Double> relevScores = new HashMap<Integer, Double>();
+        HashMap<Integer, Double> scores = new HashMap<>();
         BufferedReader br = new BufferedReader(new FileReader(args[1]));
         String strLine;
         String query = "";
@@ -23,7 +22,7 @@ public class NdcgMain {
                 double relevance = Double.parseDouble(tokens[1]);
                 if (relevance < 0)
                     relevance = 0;
-                relevScores.put(query.hashCode() + url.hashCode(), relevance);
+                scores.put(query.hashCode() + url.hashCode(), relevance);
             }
         }
         br.close();
@@ -43,8 +42,8 @@ public class NdcgMain {
                 totalQueries++;
             } else {
                 String url = strLine.substring(strLine.indexOf(":") + 1).trim();
-                if (relevScores.containsKey(query.hashCode() + url.hashCode())) {
-                    double relevance = relevScores.get(query.hashCode() + url.hashCode());
+                if (scores.containsKey(query.hashCode() + url.hashCode())) {
+                    double relevance = scores.get(query.hashCode() + url.hashCode());
                     rels.add(relevance);
                 } else {
                     System.err.printf("Warning. Cannot find query %s with url %s in %s. Ignoring this line.\n", query, url, args[1]);

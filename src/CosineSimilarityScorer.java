@@ -1,7 +1,7 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class CosineSimilarityScorer extends AScorer {
+public class CosineSimilarityScorer extends Scorer {
     public CosineSimilarityScorer(Map<String, Double> idfs) {
         super(idfs);
     }
@@ -37,9 +37,9 @@ public class CosineSimilarityScorer extends AScorer {
             double docScore = (
                     urlweight * tfs.get("url").get(term) +
                     titleweight * tfs.get("title").get(term) +
-                    bodyweight * tfs.get("body").get(term) +
+                    bodyweight * tfs.get("body_hits").get(term) +
                     headerweight * tfs.get("header").get(term) +
-                    anchorweight * tfs.get("anchor").get(term)
+                    anchorweight * tfs.get("anchor_text").get(term)
             );
             docVector[i] = docScore;
             queryVector[i] = tfQuery.get(term);

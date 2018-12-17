@@ -3,7 +3,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class BM25Scorer extends AScorer {
+public class BM25Scorer extends Scorer {
     Map<Query, Map<String, Document>> queryDict;
 
     public BM25Scorer(Map<String, Double> idfs, Map<Query, Map<String, Document>> queryDict) {

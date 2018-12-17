@@ -3,12 +3,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class AScorer {
+public abstract class Scorer {
 
     Map<String, Double> idfs;
-    String[] TFTYPES = {"url", "title", "body", "header", "anchor"};
+    String[] TFTYPES = {"url", "title", "body_hits", "header", "anchor_text"};
 
-    public AScorer(Map<String, Double> idfs) {
+    public Scorer(Map<String, Double> idfs) {
         this.idfs = idfs;
     }
 
